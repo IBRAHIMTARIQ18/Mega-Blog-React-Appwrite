@@ -90,6 +90,41 @@ export class DatabaseService {
     }
     return false;
   }
+
+  //file upload service
+
+  async uploadFile(file) {
+    try {
+      return await this.bucket.createFile({
+        bucketId: conf.appwriteBucketId,
+        fileId: ID.unique(),
+        file,
+      });
+    } catch (error) {
+      console.log("Appwrite Service :: uploadFile :: error ", error);
+    }
+    return false;
+  }
+
+  async deleteFile(fileId) {
+    try {
+      await this.bucket.deleteFile({
+        bucketId: conf.appwriteBucketId,
+        fileId,
+      });
+      return true;
+    } catch (error) {
+      console.log("Appwrite Service :: deleteFile :: error ", error);
+    }
+    return false;
+  }
+
+  getFilePreview(fileId) {
+    return this.bucket.getFilePreview({
+      bucketId: conf.appwriteBucketId,
+      fileId,
+    });
+  }
 }
 
 const databaseService = new DatabaseService();
