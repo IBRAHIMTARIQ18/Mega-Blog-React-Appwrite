@@ -32,6 +32,24 @@ export class DatabaseService {
       console.log("Appwrite Service :: createPost :: error ", error);
     }
   }
+
+  async updatePost(slug, { title, content, featuredImage, status }) {
+    try {
+      return await this.tablesDB.updateRow(
+        conf.appwriteDatabaseId,
+        conf.appwriteCollectionId,
+        slug,
+        {
+          title,
+          content,
+          featuredImage,
+          status,
+        }
+      );
+    } catch (error) {
+      console.log("Appwrite Service :: updatePost :: error ", error);
+    }
+  }
 }
 
 const databaseService = new DatabaseService();
