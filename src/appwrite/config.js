@@ -64,6 +64,32 @@ export class DatabaseService {
     }
     return false;
   }
+
+  async getPost(slug) {
+    try {
+      return await this.tablesDB.getRow({
+        databaseId: conf.appwriteDatabaseId,
+        tableId: conf.appwriteCollectionId,
+        rowId: slug,
+      });
+    } catch (error) {
+      console.log("Appwrite Service :: getPost :: error ", error);
+    }
+    return false;
+  }
+
+  async getAllPosts(queries = [Query.equal("status", "active")]) {
+    try {
+      return await this.tablesDB.listRows({
+        databaseId: conf.appwriteDatabaseId,
+        tableId: conf.appwriteCollectionId,
+        queries,
+      });
+    } catch (error) {
+      console.log("Appwrite Service :: getAllPosts :: error ", error);
+    }
+    return false;
+  }
 }
 
 const databaseService = new DatabaseService();
